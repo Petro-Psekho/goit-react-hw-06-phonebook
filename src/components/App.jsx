@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
+import { getContactsItems } from 'redux/contactsSlice';
 
 import {
   Container,
@@ -12,24 +14,28 @@ import { ContactList } from 'components/ContactList/ContactList';
 import { Filter } from 'components/Filter/Filter';
 
 export default function App() {
+  const contactsItems = useSelector(getContactsItems);
+
   const [contacts, setContacts] = useState(() => {
     return JSON.parse(window.localStorage.getItem('contacts')) ?? [];
   });
   const [filter, setFilter] = useState('');
 
+  console.log(contacts);
+
   useEffect(() => {
     window.localStorage.setItem('contacts', JSON.stringify(contacts));
   }, [contacts]);
 
-  const formSubmitData = data => {
-    const currentName = contacts.find(
-      item => item.name.toLowerCase() === data.name.toLowerCase()
-    );
-    if (currentName)
-      return alert(currentName.name + ' is already in contacts.');
+  // const formSubmitData = data => {
+  //   const currentName = contacts.find(
+  //     item => item.name.toLowerCase() === data.name.toLowerCase()
+  //   );
+  //   if (currentName)
+  //     return alert(currentName.name + ' is already in contacts.');
 
-    setContacts(prevState => [...prevState, { ...data, id: nanoid() }]);
-  };
+  //   setContacts(prevState => [...prevState, { ...data, id: nanoid() }]);
+  // };
 
   const changeFilter = e => {
     setFilter(e.target.value);
@@ -51,11 +57,12 @@ export default function App() {
     <Container>
       <div>
         <Title>Phonebook</Title>
-        <ContactForm onSubmit={formSubmitData} />
+        <ContactForm />
+        {/* <ContactForm onSubmit={formSubmitData} /> */}
         <ContactsTitle>Contacts</ContactsTitle>
         <FindContactsTitle>Find contacts by name</FindContactsTitle>
         <Filter value={filter} onChange={changeFilter} />
-        {contacts.length ? (
+        {contactsItems.length ? (
           <ContactList
             contacts={getFilteredContacts()}
             onDelete={deleteContacts}

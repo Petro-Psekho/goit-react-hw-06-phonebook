@@ -1,5 +1,9 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from 'redux/contactsSlice';
+import { getContactsItems } from 'redux/contactsSlice';
+
 import {
   ErrMessage,
   FormWrap,
@@ -8,7 +12,9 @@ import {
   SubmitBtn,
 } from 'components/ContactForm/ContactForm.styled';
 
-export const ContactForm = ({ onSubmit }) => {
+export const ContactForm = () => {
+  const dispatch = useDispatch();
+  const contactsItems = useSelector(getContactsItems);
   const {
     register,
     handleSubmit,
@@ -28,8 +34,21 @@ export const ContactForm = ({ onSubmit }) => {
     }
   }, [formState.isSubmitSuccessful, reset]);
 
+  const formSubmitData = data => {
+    console.log('data>>>>>>>>>', data);
+    console.log('contactsItems>>>>>>>>>', contactsItems);
+    const currentName = contactsItems.find(
+      item => item.name.toLowerCase() === data.name.toLowerCase()
+    );
+    if (currentName)
+      return alert(currentName.name + ' is already in contacts.');
+
+    dispatch(addContact(data));
+    alert(currentName.name + ' added to your phonebook.');
+  };
+
   return (
-    <FormWrap onSubmit={handleSubmit(onSubmit)}>
+    <FormWrap onSubmit={handleSubmit(formSubmitData)}>
       <InputName>Name</InputName>
       <FormInput
         autoComplete="off"
