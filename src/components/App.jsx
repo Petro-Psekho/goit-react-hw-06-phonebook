@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { nanoid } from 'nanoid';
+
 import { getContactsItems } from 'redux/contactsSlice';
 
 import {

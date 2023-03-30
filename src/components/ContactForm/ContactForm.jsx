@@ -35,8 +35,6 @@ export const ContactForm = () => {
   }, [formState.isSubmitSuccessful, reset]);
 
   const formSubmitData = data => {
-    console.log('data>>>>>>>>>', data);
-    console.log('contactsItems>>>>>>>>>', contactsItems);
     const currentName = contactsItems.find(
       item => item.name.toLowerCase() === data.name.toLowerCase()
     );

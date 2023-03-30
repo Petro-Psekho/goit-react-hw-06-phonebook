@@ -12,7 +12,7 @@ import { persistedReducer } from './contactsSlice';
 import { filterSlice } from './filterSlice';
 
 export const store = configureStore({
-  reducer: { phonebook: persistedReducer, filter: filterSlice.reducer },
+  reducer: { contacts: persistedReducer, filter: filterSlice.reducer },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {

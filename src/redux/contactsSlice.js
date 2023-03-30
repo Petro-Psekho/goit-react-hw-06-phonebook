@@ -3,17 +3,18 @@ import { nanoid } from 'nanoid';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
+const initialState = {
+  items: [],
+};
 export const contactsSlice = createSlice({
-  name: 'phonebook',
-  initialState: {
-    contacts: [],
-  },
+  name: 'contacts',
+  initialState,
   reducers: {
     addContact: {
-      reduser(state, action) {
-        state.contacts.push(action.payload);
+      reducer(state, { payload }) {
+        state.items.push(payload);
       },
-      addId(contact) {
+      prepare(contact) {
         return {
           payload: {
             ...contact,
@@ -22,17 +23,14 @@ export const contactsSlice = createSlice({
         };
       },
     },
-
-    delContact(state, action) {
-      state.contacts = state.contacts.filter(
-        contact => contact.id !== action.payload.id
-      );
+    deleteContact(state, action) {
+      state.items = state.items.filter(item => item.id !== action.payload.id);
     },
   },
 });
 
 const persistConfig = {
-  key: 'phonebook',
+  key: 'contacts',
   storage,
 };
 export const persistedReducer = persistReducer(
@@ -40,6 +38,6 @@ export const persistedReducer = persistReducer(
   contactsSlice.reducer
 );
 
-export const { addContact, delContact } = contactsSlice.actions;
+export const { addContact, deleteContact } = contactsSlice.actions;
 
-export const getContactsItems = state => state.phonebook.contacts;
+export const getContactsItems = state => state.contacts.items;
