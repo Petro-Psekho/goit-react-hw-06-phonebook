@@ -42,7 +42,7 @@ export const ContactForm = () => {
       return alert(currentName.name + ' is already in contacts.');
 
     dispatch(addContact(data));
-    alert(currentName.name + ' added to your phonebook.');
+    alert(data.name + ' added to your phonebook.');
   };
 
   return (
