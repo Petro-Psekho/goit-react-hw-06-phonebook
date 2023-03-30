@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import { getContactsItems } from 'redux/contactsSlice';
+import { Toaster } from 'react-hot-toast';
 
 import {
   Container,
@@ -25,6 +26,7 @@ export default function App() {
         <Filter />
         {contactsItems.length ? <ContactList /> : <p>No any contacts</p>}
       </div>
+      <Toaster />
     </Container>
   );
 }

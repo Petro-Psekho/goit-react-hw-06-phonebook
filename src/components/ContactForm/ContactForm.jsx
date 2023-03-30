@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-hot-toast';
 import { addContact } from 'redux/contactsSlice';
 import { getContactsItems } from 'redux/contactsSlice';
 
@@ -39,10 +40,12 @@ export const ContactForm = () => {
       item => item.name.toLowerCase() === data.name.toLowerCase()
     );
     if (currentName)
-      return alert(currentName.name + ' is already in contacts.');
+      // return alert(currentName.name + ' is already in contacts.');
+      // return toast.loading('Waiting...');
+      return toast.error(`${data.name} is already in contacts`);
 
     dispatch(addContact(data));
-    alert(data.name + ' added to your phonebook.');
+    toast.success(`${data.name} added to your phonebook`);
   };
 
   return (
