@@ -3,6 +3,8 @@ import { getContactsItems } from 'redux/contactsSlice';
 import { getFilterValue } from 'redux/filterSlice';
 import { ContactListItem } from 'components/ContactListItem/ContactListItem';
 
+import { Container } from 'components/ContactList/ContactList.styled';
+
 export const ContactList = () => {
   const contacts = useSelector(getContactsItems);
   const filterValue = useSelector(getFilterValue);
@@ -18,10 +20,10 @@ export const ContactList = () => {
   const filteredContacts = getFilteredContacts();
 
   return (
-    <ul>
+    <Container>
       {filteredContacts.map(({ id, name, number }) => (
         <ContactListItem key={id} id={id} name={name} number={number} />
       ))}
-    </ul>
+    </Container>
   );
 };

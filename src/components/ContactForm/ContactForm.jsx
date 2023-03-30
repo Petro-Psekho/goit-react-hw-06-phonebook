@@ -39,10 +39,7 @@ export const ContactForm = () => {
     const currentName = contactsItems.find(
       item => item.name.toLowerCase() === data.name.toLowerCase()
     );
-    if (currentName)
-      // return alert(currentName.name + ' is already in contacts.');
-      // return toast.loading('Waiting...');
-      return toast.error(`${data.name} is already in contacts`);
+    if (currentName) return toast.error(`${data.name} is already in contacts`);
 
     dispatch(addContact(data));
     toast.success(`${data.name} added to your phonebook`);
